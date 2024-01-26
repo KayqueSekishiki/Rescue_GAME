@@ -8,6 +8,23 @@ function start() {
   $("#backgroundGame").append("<div id='score'></div>");
   $("#backgroundGame").append("<div id='energy'></div>");
 
+  var shootSFX = document.getElementById("shootSFX");
+  var explosionSFX = document.getElementById("explosionSFX");
+  var backgroundMusic = document.getElementById("backgroundMusic");
+  var gameoverSFX = document.getElementById("gameoverSFX");
+  var aliadoMortoSFX = document.getElementById("aliadoMortoSFX");
+  var aliadoResgatadoSFX = document.getElementById("aliadoResgatadoSFX");
+
+  backgroundMusic.addEventListener(
+    "ended",
+    function () {
+      backgroundMusic.currentTime = 0;
+      backgroundMusic.play();
+    },
+    false
+  );
+  backgroundMusic.play();
+
   const game = {
     timer: setInterval(loop, 30),
     keyPressed: [],
@@ -107,6 +124,7 @@ function start() {
 
   function shooting() {
     if (canShoot == true) {
+      shootSFX.play();
       canShoot = false;
 
       posY = parseInt($("#player").css("top"));
@@ -143,6 +161,7 @@ function start() {
 
     if (collision1.length > 0) {
       currentEnergy--;
+      explosionSFX.play();
       enemy1X = parseInt($("#enemy1").css("left"));
       enemy1Y = parseInt($("#enemy1").css("top"));
       explosion1(enemy1X, enemy1Y);
@@ -154,6 +173,7 @@ function start() {
 
     if (collision2.length > 0) {
       currentEnergy--;
+      explosionSFX.play();
       enemy2X = parseInt($("#enemy2").css("left"));
       enemy2Y = parseInt($("#enemy2").css("top"));
       explosion2(enemy2X, enemy2Y);
@@ -164,12 +184,13 @@ function start() {
     }
 
     if (collision3.length > 0) {
+      explosionSFX.play();
       enemy1X = parseInt($("#enemy1").css("left"));
       enemy1Y = parseInt($("#enemy1").css("top"));
 
       explosion1(enemy1X, enemy1Y);
       score += 100;
-      enemyVelocity += 1;
+      enemyVelocity += 0.3;
       $("#shooting").css("left", 950);
 
       enemyPosY = parseInt(Math.random() * 334);
@@ -178,6 +199,7 @@ function start() {
     }
 
     if (collision4.length > 0) {
+      explosionSFX.play();
       score += 50;
       enemy2X = parseInt($("#enemy2").css("left"));
       enemy2Y = parseInt($("#enemy2").css("top"));
@@ -191,12 +213,14 @@ function start() {
 
     if (collision5.length > 0) {
       allySave++;
+      aliadoResgatadoSFX.play();
       repositionAlly();
       $("#ally").remove();
     }
 
     if (collision6.length > 0) {
       allyDie++;
+      aliadoMortoSFX.play();
       allyX = parseInt($("#ally").css("left"));
       allyY = parseInt($("#ally").css("top"));
       explosion3(allyX, allyY);
