@@ -336,6 +336,30 @@ function start() {
 
     if (currentEnergy == 0) {
       $("#energy").css("background-image", "url(src/assets/imgs/energia0.png)");
+      endgame();
     }
+  }
+
+  function endgame() {
+    gameOver = true;
+    backgroundMusic.pause();
+    gameoverSFX.play();
+
+    window.clearInterval(game.timer);
+    game.timer = null;
+
+    $("#player").remove();
+    $("#enemy1").remove();
+    $("#enemy2").remove();
+    $("#ally").remove();
+
+    $("#backgroundGame").append("<div id='endgame'></div>");
+
+    $("#endgame").html(
+      "<h1> Game Over </h1><p>Sua pontuação foi: " +
+        score +
+        "</p>" +
+        "<div id='restart' onClick=restartGame()><h3>Jogar Novamente</h3></div>"
+    );
   }
 }
