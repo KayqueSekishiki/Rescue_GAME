@@ -39,11 +39,18 @@ function start() {
     if (game.keyPressed[KEYBINDS.W]) {
       let top = parseInt($("#player").css("top"));
       $("#player").css("top", top - 10);
+
+      if (top <= 0) {
+        $("#player").css("top", top + 10);
+      }
     }
 
     if (game.keyPressed[KEYBINDS.S]) {
       let top = parseInt($("#player").css("top"));
       $("#player").css("top", top + 10);
+      if (top >= 434) {
+        $("#player").css("top", top - 10);
+      }
     }
 
     if (game.keyPressed[KEYBINDS.D]) {
