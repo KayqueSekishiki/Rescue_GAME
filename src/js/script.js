@@ -18,6 +18,7 @@ function start() {
   };
 
   const enemyVelocity = 5;
+  let canShoot = true;
   let enemyPosY = parseInt(Math.random() * 334);
 
   $(document).keydown(function (e) {
@@ -60,6 +61,7 @@ function start() {
     }
 
     if (game.keyPressed[KEYBINDS.D]) {
+      shooting();
     }
   }
 
@@ -90,6 +92,35 @@ function start() {
 
     if (posX > 906) {
       $("#ally").css("left", 0);
+    }
+  }
+
+  function shooting() {
+    debugger;
+    if (canShoot == true) {
+      canShoot = false;
+
+      posY = parseInt($("#player").css("top"));
+      posX = parseInt($("#player").css("left"));
+      shootX = posX + 190;
+      shootY = posY + 37;
+      $("#backgroundGame").append("<div id='shooting'></div");
+      $("#shooting").css("top", shootY);
+      $("#shooting").css("left", shootX);
+
+      var timeShooting = window.setInterval(executeShoot, 30);
+    }
+
+    function executeShoot() {
+      posX = parseInt($("#shooting").css("left"));
+      $("#shooting").css("left", posX + 15);
+
+      if (posX > 900) {
+        window.clearInterval(timeShooting);
+        timeShooting = null;
+        $("#shooting").remove();
+        canShoot = true;
+      }
     }
   }
 }
