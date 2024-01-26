@@ -4,7 +4,7 @@ function start() {
   $("#backgroundGame").append("<div id='player' class='anima1'></div>");
   $("#backgroundGame").append("<div id='enemy1' class='anima2'></div>");
   $("#backgroundGame").append("<div id='enemy2' ></div>");
-  $("#backgroundGame").append("<div id='friend' class='anima3'></div>");
+  $("#backgroundGame").append("<div id='ally' class='anima3'></div>");
 
   const game = {
     timer: setInterval(loop, 30),
@@ -32,6 +32,8 @@ function start() {
     moveBackground();
     movePlayer();
     moveEnemy1();
+    moveEnemy2();
+    moveAlly();
   }
 
   function moveBackground() {
@@ -62,14 +64,32 @@ function start() {
   }
 
   function moveEnemy1() {
-    enemyPosX = parseInt($("#enemy1").css("left"));
-    $("#enemy1").css("left", enemyPosX - enemyVelocity);
+    posX = parseInt($("#enemy1").css("left"));
+    $("#enemy1").css("left", posX - enemyVelocity);
     $("#enemy1").css("top", enemyPosY);
 
-    if (enemyPosX <= 0) {
+    if (posX <= 0) {
       enemyPosY = parseInt(Math.random() * 334);
       $("#enemy1").css("left", 694);
       $("#enemy1").css("top", enemyPosY);
+    }
+  }
+
+  function moveEnemy2() {
+    posX = parseInt($("#enemy2").css("left"));
+    $("#enemy2").css("left", posX - 3);
+
+    if (posX <= 0) {
+      $("#enemy2").css("left", 775);
+    }
+  }
+
+  function moveAlly() {
+    posX = parseInt($("#ally").css("left"));
+    $("#ally").css("left", posX + 1);
+
+    if (posX > 906) {
+      $("#ally").css("left", 0);
     }
   }
 }
