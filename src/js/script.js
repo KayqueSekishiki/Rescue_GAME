@@ -363,3 +363,9 @@ function start() {
     );
   }
 }
+
+function restartGame() {
+  gameoverSFX.pause();
+  $("#endgame").remove();
+  start();
+}
