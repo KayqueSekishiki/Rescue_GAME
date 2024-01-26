@@ -17,6 +17,9 @@ function start() {
     D: 68,
   };
 
+  const enemyVelocity = 5;
+  let enemyPosY = parseInt(Math.random() * 334);
+
   $(document).keydown(function (e) {
     game.keyPressed[e.which] = true;
   });
@@ -28,6 +31,7 @@ function start() {
   function loop() {
     moveBackground();
     movePlayer();
+    moveEnemy1();
   }
 
   function moveBackground() {
@@ -54,6 +58,18 @@ function start() {
     }
 
     if (game.keyPressed[KEYBINDS.D]) {
+    }
+  }
+
+  function moveEnemy1() {
+    enemyPosX = parseInt($("#enemy1").css("left"));
+    $("#enemy1").css("left", enemyPosX - enemyVelocity);
+    $("#enemy1").css("top", enemyPosY);
+
+    if (enemyPosX <= 0) {
+      enemyPosY = parseInt(Math.random() * 334);
+      $("#enemy1").css("left", 694);
+      $("#enemy1").css("top", enemyPosY);
     }
   }
 }
