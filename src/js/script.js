@@ -5,6 +5,7 @@ function start() {
   $("#backgroundGame").append("<div id='enemy1' class='anima2'></div>");
   $("#backgroundGame").append("<div id='enemy2' ></div>");
   $("#backgroundGame").append("<div id='ally' class='anima3'></div>");
+  $("#backgroundGame").append("<div id='score'></div>");
 
   const game = {
     timer: setInterval(loop, 30),
@@ -21,6 +22,9 @@ function start() {
   let canShoot = true;
   let enemyPosY = parseInt(Math.random() * 334);
   let gameOver = false;
+  let score = 0;
+  let allySave = 0;
+  let allyDie = 0;
 
   $(document).keydown(function (e) {
     game.keyPressed[e.which] = true;
@@ -37,6 +41,7 @@ function start() {
     moveEnemy2();
     moveAlly();
     collision();
+    updateScore();
   }
 
   function moveBackground() {
@@ -158,6 +163,7 @@ function start() {
       enemy1Y = parseInt($("#enemy1").css("top"));
 
       explosion1(enemy1X, enemy1Y);
+      score += 100;
       $("#shooting").css("left", 950);
 
       enemyPosY = parseInt(Math.random() * 334);
@@ -166,6 +172,7 @@ function start() {
     }
 
     if (collision4.length > 0) {
+      score += 50;
       enemy2X = parseInt($("#enemy2").css("left"));
       enemy2Y = parseInt($("#enemy2").css("top"));
       $("#enemy2").remove();
@@ -177,11 +184,13 @@ function start() {
     }
 
     if (collision5.length > 0) {
+      allySave++;
       repositionAlly();
       $("#ally").remove();
     }
 
     if (collision6.length > 0) {
+      allyDie++;
       allyX = parseInt($("#ally").css("left"));
       allyY = parseInt($("#ally").css("top"));
       explosion3(allyX, allyY);
@@ -268,5 +277,17 @@ function start() {
         $("#backgroundGame").append("<div id='ally' class='anima3'></div>");
       }
     }
+  }
+
+  function updateScore() {
+    $("#score").html(
+      "<h2> Pontuação: " +
+        score +
+        " Aliados Salvos: " +
+        allySave +
+        " Aliados Perdidos: " +
+        allyDie +
+        "</h2>"
+    );
   }
 }
