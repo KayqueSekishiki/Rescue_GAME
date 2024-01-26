@@ -19,7 +19,7 @@ function start() {
     D: 68,
   };
 
-  const enemyVelocity = 5;
+  let enemyVelocity = 5;
   let canShoot = true;
   let enemyPosY = parseInt(Math.random() * 334);
   let gameOver = false;
@@ -169,6 +169,7 @@ function start() {
 
       explosion1(enemy1X, enemy1Y);
       score += 100;
+      enemyVelocity += 1;
       $("#shooting").css("left", 950);
 
       enemyPosY = parseInt(Math.random() * 334);
