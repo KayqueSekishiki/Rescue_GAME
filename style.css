@@ -83,6 +83,18 @@ body {
   background-image: url(../Rescue_GAME/src/assets/imgs/disparo.png);
 }
 
+#explosion1 {
+  width: 15px;
+  height: 87px;
+  position: absolute;
+}
+
+#explosion2 {
+  width: 15px;
+  height: 87px;
+  position: absolute;
+}
+
 .anima1 {
   background-image: url(../Rescue_GAME/src/assets/imgs/inimigo1.png);
   animation: play 0.5s steps(2) infinite;

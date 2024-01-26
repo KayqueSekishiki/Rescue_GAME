@@ -35,6 +35,7 @@ function start() {
     moveEnemy1();
     moveEnemy2();
     moveAlly();
+    collision();
   }
 
   function moveBackground() {
@@ -96,7 +97,6 @@ function start() {
   }
 
   function shooting() {
-    debugger;
     if (canShoot == true) {
       canShoot = false;
 
@@ -121,6 +121,38 @@ function start() {
         $("#shooting").remove();
         canShoot = true;
       }
+    }
+  }
+
+  function collision() {
+    let collision1 = $("#player").collision($("#enemy1"));
+    if (collision1.length > 0) {
+      enemy1X = parseInt($("#enemy1").css("left"));
+      enemy1Y = parseInt($("#enemy1").css("top"));
+      explosion1(enemy1X, enemy1Y);
+
+      enemyPosY = parseInt(Math.random() * 334);
+      $("#enemy1").css("left", 694);
+      $("#enemy1").css("top", enemyPosY);
+    }
+  }
+  function explosion1(enemy1X, enemy1Y) {
+    $("#backgroundGame").append("<div id='explosion1'></div");
+    $("#explosion1").css(
+      "background-image",
+      "url(src/assets/imgs/explosao.png)"
+    );
+    let div = $("#explosion1");
+    div.css("top", enemy1Y);
+    div.css("left", enemy1X);
+    div.animate({ width: 200, opacity: 0 }, "slow");
+
+    let timeExplosion = window.setInterval(removeExplosion, 1000);
+
+    function removeExplosion() {
+      div.remove();
+      window.clearInterval(timeExplosion);
+      timeExplosion = null;
     }
   }
 }
