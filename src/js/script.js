@@ -6,6 +6,7 @@ function start() {
   $("#backgroundGame").append("<div id='enemy2' ></div>");
   $("#backgroundGame").append("<div id='ally' class='anima3'></div>");
   $("#backgroundGame").append("<div id='score'></div>");
+  $("#backgroundGame").append("<div id='energy'></div>");
 
   const game = {
     timer: setInterval(loop, 30),
@@ -25,6 +26,7 @@ function start() {
   let score = 0;
   let allySave = 0;
   let allyDie = 0;
+  let currentEnergy = 3;
 
   $(document).keydown(function (e) {
     game.keyPressed[e.which] = true;
@@ -42,6 +44,7 @@ function start() {
     moveAlly();
     collision();
     updateScore();
+    updateEnergy();
   }
 
   function moveBackground() {
@@ -139,6 +142,7 @@ function start() {
     var collision6 = $("#enemy2").collision($("#ally"));
 
     if (collision1.length > 0) {
+      currentEnergy--;
       enemy1X = parseInt($("#enemy1").css("left"));
       enemy1Y = parseInt($("#enemy1").css("top"));
       explosion1(enemy1X, enemy1Y);
@@ -149,6 +153,7 @@ function start() {
     }
 
     if (collision2.length > 0) {
+      currentEnergy--;
       enemy2X = parseInt($("#enemy2").css("left"));
       enemy2Y = parseInt($("#enemy2").css("top"));
       explosion2(enemy2X, enemy2Y);
@@ -281,13 +286,31 @@ function start() {
 
   function updateScore() {
     $("#score").html(
-      "<h2> Pontuação: " +
+      "<h2> Pontos: " +
         score +
-        " Aliados Salvos: " +
+        "  Salvos: " +
         allySave +
-        " Aliados Perdidos: " +
+        "  Perdidos: " +
         allyDie +
         "</h2>"
     );
+  }
+
+  function updateEnergy() {
+    if (currentEnergy == 3) {
+      $("#energy").css("background-image", "url(src/assets/imgs/energia3.png)");
+    }
+
+    if (currentEnergy == 2) {
+      $("#energy").css("background-image", "url(src/assets/imgs/energia2.png)");
+    }
+
+    if (currentEnergy == 1) {
+      $("#energy").css("background-image", "url(src/assets/imgs/energia1.png)");
+    }
+
+    if (currentEnergy == 0) {
+      $("#energy").css("background-image", "url(src/assets/imgs/energia0.png)");
+    }
   }
 }
